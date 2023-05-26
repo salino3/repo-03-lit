@@ -14,6 +14,8 @@
     "@web/dev-server": "^0.2.1"
   },
   "dependencies": {
-    "lit": "^2.7.4"
+    "@dile/dile-input": "^2.0.5",
+    "lit": "^2.7.4",
+    "wired-elements": "^3.0.0-rc.6"
   }
 }

@@ -1,34 +1,45 @@
-import { LitElement, html, css } from 'lit';
-// https://www.youtube.com/watch?v=JXcNPXGHjlM&t=3856s&ab_channel=DesarrolloWeb.com
-// min 1.04.00
+import { LitElement, html, css } from "lit";
+import { WiredButton } from "wired-elements";
+import { WiredCard } from "wired-elements";
+// import { WiredInput } from "wired-elements";
+import '@dile/dile-input/dile-input';
+import { WiredSlider } from "wired-elements";
+
+
 export class EitCounter extends LitElement {
-  static styles = [
-    css`
-      :host {
-        display: block;
-        border: solid;
-        /* background-color: blue; */
-      }
-      h2 {
-        color: red;
-      }
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+    h2 {
+      color: red;
+    }
+    .myParagraph {
+      color: blue;
+      font-size: 24px;
+    }
+    wired-input {
+      width: 70px;
+      font-size: 24px;
+      padding: 5px;
+    }
+    wired-button {
+      background-color: #8cf;
+    }
+    wired-button.decrement {
+      background-color: #fcc;
+    }
+    wired-card {
+      margin: 1rem;
+      padding: 1rem;
+    }
+    @media (min-width: 500px) {
       .myParagraph {
-        color: blue;
-        font-size: 24px;
+        font-size: 50px;
+        color: orange;
       }
-      input {
-        width: 70px;
-        font-size: 24px;
-        padding: 5px;
-      }
-      @media (min-width: 500px) {
-        .myParagraph {
-          font-size: 50px;
-          color: orange;
-        }
-      }
-    `,
-  ];
+    }
+  `;
 
   //   static get properties() { //old sintaxis, it works again
   //     return {
@@ -37,36 +48,70 @@ export class EitCounter extends LitElement {
   //   }
 
   static properties = {
-    counter: { type: Number },
-    reflect: true // actualiza automaticamente en 'Element' de la console
+    counter: {
+      type: Number,
+      reflect: true, // actualiza automaticamente en 'Element' de la console
+    },
+    quantity: { type: Number },
   };
 
   constructor() {
     super();
     this.counter = 0;
+    this.quantity = 10;
   }
 
   render() {
     return html`
-      <slot></slot>
-      <h2>This is a H2</h2>
-      <p class="myParagraph">${this.counter}</p>
-      <input class="form-control" id="quantity" type="number" value="0" name="quantity" />
-      <button @click=${this.increment}>+ 1</button>
-      <button @click=${this.decrement}>- 1</button>
+      <wired-card elevation="3">
+        <slot></slot>
+        <h2>This is a H2</h2>
+        <p class="myParagraph">${this.counter}</p>
+        <p>
+          <wired-slider
+            .value="${this.quantity}"
+            min="1"
+            max="20"
+            @change=${this.handleChangeSlider}
+          ></wired-slider>
+        </p>
+        <dile-input
+          label="Quantity"
+          class="form-control"
+          name="quantity"
+          id="quantity"
+          type="number"
+          value="${this.quantity}"
+          @input=${this.handleQuantityChange}
+        >
+        </dile-input>
+        <wired-button @click=${this.increment}>Incrementar</wired-button>
+        <wired-button class="decrement" @click=${this.decrement}
+          >Decrementar</wired-button
+        >
+      </wired-card>
     `;
   }
 
-  get quantity() {
-   return this.shadowRoot.getElementById("quantity").value;
+  get quantityInput() {
+    return this.shadowRoot.getElementById("quantity");
   }
 
-  increment() {
-    this.counter += parseInt(this.quantity);
+  handleQuantityChange(event) {
+    this.quantity = parseInt(event.target.value);
   }
+
+  handleChangeSlider(event) {
+    this.quantity = parseInt(event.detail.value);
+  };
+
+  increment() {
+    this.counter += this.quantity;
+  }
+
   decrement() {
-    this.counter -= parseInt(this.quantity);
+    this.counter -= this.quantity;
   }
 }
 
-customElements.define('eit-counter', EitCounter);
+customElements.define("eit-counter", EitCounter);

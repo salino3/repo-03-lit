@@ -12,9 +12,16 @@
  <eit-counter counter="10">
     Counter!
  </eit-counter>
-  <eit-counter  counter=2>
+  <eit-counter id="counter" counter=2>
     <h3>This is a h3</h3>
  </eit-counter>
-  <script type="module" src="./components/eit-counter.js"></script> 
+ <button id="reset">Reset</button>
+ <script type="module" src="./components/eit-counter.js"></script> 
+
+ <script>
+   document.getElementById('reset').addEventListener('click', function() {
+      document.getElementById('counter').counter = 0
+   });
+ </script>
 </body>
 </html>

@@ -2,8 +2,8 @@ import { LitElement, html, css } from "lit";
 import { WiredButton } from "wired-elements";
 import { WiredCard } from "wired-elements";
 // import { WiredInput } from "wired-elements";
-import '@dile/dile-input/dile-input';
 import { WiredSlider } from "wired-elements";
+import '@dile/dile-input/dile-input';
 
 
 export class EitCounter extends LitElement {

@@ -20,7 +20,10 @@
 
  <script>
    document.getElementById('reset').addEventListener('click', function() {
-      document.getElementById('counter').counter = 0
+      document.getElementById('counter').counter = 0;
+      const counter = document.createElement('eit-counter');
+      // counter.setAttribute('quantity', 200);
+      document.body.appendChild(counter);
    });
  </script>
 </body>
